@@ -2,6 +2,7 @@
 
 library(geniusr)
 library(dplyr)
+library(here)
 library(rvest) # For workaround function
 library(xml2) # For workaround function
 library(rlang) # For workaround function
@@ -18,41 +19,6 @@ all_tracks <- tibble(
     seq(1, 10, by = 1),
     seq(1, 10, by = 1),
     seq(1, 11, by = 1)),
-  song_name = c(
-    # Spice
-    "Wannabe",
-    "Say You'll Be There",
-    "2 Become 1",
-    "Love Thing",
-    "Last Time Lover",
-    "Mama",
-    "Who Do You Think You Are",
-    "Something Kinda Funny",
-    "Naked",
-    "If U Can't Dance",
-    # Spiceworld
-    "Spice Up Your Life",
-    "Stop",
-    "Too Much",
-    "Saturday Night Divas",
-    "Never Give Up On The Good Times",
-    "Move Over",
-    "Do It",
-    "Denying",
-    "Viva Forever",
-    "The Lady Is A Vamp",
-    # Forever
-    "Holler",
-    "Tell Me Why",
-    "Let Love Lead The Way",
-    "Right Back At Ya",
-    "Get Down With Me",
-    "Wasting My Time",
-    "Weekend Love",
-    "Time Goes By",
-    "If You Wanna Have Some Fun",
-    "Oxygen",
-    "Goodbye"),
   song_id = c(
     # Spice
     89740,   # Wannabe
@@ -102,17 +68,30 @@ purrr::map_df(song_id_vec, function(i) {
   cat(".")
   
   # get song lyrics
-  song_lyrics <- get_lyrics_id(song_id = i)
+  lyrics_raw <- get_lyrics_id(song_id = i)
   
   # Tidying
-  song_lyrics %>%
+  lyrics_tidy <- lyrics_raw %>%
     # Add line number
-    mutate(line_number = row_number()) -> lyrics_tidy
+    mutate(line_number = row_number()) %>%
+    # Merge with all_tracks details
+    left_join(., all_tracks, by = "song_id") %>%
+    # Reorder columns
+    select(
+      artist_name, album_name, track_number, song_id, song_name, line_number,
+      section_name, line, section_artist)
   
 }) -> lyrics
 
 # Export to file ---------------------------------------------------------------
 
 # .rds
+saveRDS(
+  lyrics,
+  here("data/lyrics.rds"))
 
 # .csv
+write.csv(
+  lyrics,
+  here("data/lyrics.csv"),
+  row.names = FALSE)
