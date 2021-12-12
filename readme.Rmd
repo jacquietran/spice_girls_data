@@ -33,6 +33,8 @@ A data dictionary for each data set is provided [here](https://github.com/jacqui
 
 ## Cleaning script example
 
+The code below uses the `studio_album_tracks` data set to produce summary statistics for selected audio features.
+
 ```{r, message = FALSE}
 
 # Load libraries
@@ -56,6 +58,7 @@ studio_album_tracks %>%
   arrange(album_name)
 
 ```
+
 
 ## Useful packages
 
