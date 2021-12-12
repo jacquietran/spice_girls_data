@@ -28,7 +28,7 @@ A data dictionary for each data set is provided
 
 ## Example use
 
-The code below uses the `studio_album_tracks` data set to produce
+The R code below uses the `studio_album_tracks` data set to produce
 summary statistics for selected audio features.
 
 ``` r
