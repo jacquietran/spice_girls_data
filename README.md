@@ -26,7 +26,7 @@ Credit: [Jacquie Tran](https://www.twitter.com/jacquietran)
 A data dictionary for each data set is provided
 [here](https://github.com/jacquietran/spice_girls_data/blob/main/data_dictionaries.md).
 
-## Cleaning script example
+## Example use
 
 The code below uses the `studio_album_tracks` data set to produce
 summary statistics for selected audio features.
