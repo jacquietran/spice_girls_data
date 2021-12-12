@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Edit this file then knit to .md -->
 
-# Spice Up Your Life!
+# Spice Up Your Life! <img src="/mmcdspwo_ec013-2000_sm.jpg" align="right" height="200" />
 
 The data this week comes from [Spotify](https://www.spotify.com) and
 [Genius](https://www.genius.com). Thank you to the authors of the
