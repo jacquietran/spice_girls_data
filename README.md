@@ -28,6 +28,34 @@ A data dictionary for each data set is provided
 
 ## Cleaning script example
 
+``` r
+# Load libraries
+library(dplyr)
+
+# Read data into R
+studio_album_tracks <- readr::read_csv("https://github.com/jacquietran/spice_girls_data/raw/main/data/studio_album_tracks.csv")
+
+# For each album, calculate mean values for danceability, energy, and valence
+studio_album_tracks %>%
+  group_by(album_name) %>%
+  summarise(
+    danceability_mean = mean(danceability),
+    energy_mean = mean(energy),
+    valence_mean = mean(valence)) %>%
+  ungroup() %>%
+  # Set factor levels of album_name
+  mutate(
+    album_name = factor(
+      album_name, levels = c("Spice", "Spiceworld", "Forever"))) %>%
+  arrange(album_name)
+#> # A tibble: 3 x 4
+#>   album_name danceability_mean energy_mean valence_mean
+#>   <fct>                  <dbl>       <dbl>        <dbl>
+#> 1 Spice                  0.694       0.731        0.756
+#> 2 Spiceworld             0.570       0.776        0.642
+#> 3 Forever                0.695       0.722        0.583
+```
+
 ## Useful packages
 
 -   `spotifyr`: <https://www.rcharlie.com/spotifyr/index.html>

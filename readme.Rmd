@@ -9,7 +9,7 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "figures/README-",
+  # fig.path = "figures/README-",
   out.width = "100%"
 )
 
@@ -32,6 +32,30 @@ Credit: [Jacquie Tran](https://www.twitter.com/jacquietran)
 A data dictionary for each data set is provided [here](https://github.com/jacquietran/spice_girls_data/blob/main/data_dictionaries.md).
 
 ## Cleaning script example
+
+```{r, message = FALSE}
+
+# Load libraries
+library(dplyr)
+
+# Read data into R
+studio_album_tracks <- readr::read_csv("https://github.com/jacquietran/spice_girls_data/raw/main/data/studio_album_tracks.csv")
+
+# For each album, calculate mean values for danceability, energy, and valence
+studio_album_tracks %>%
+  group_by(album_name) %>%
+  summarise(
+    danceability_mean = mean(danceability),
+    energy_mean = mean(energy),
+    valence_mean = mean(valence)) %>%
+  ungroup() %>%
+  # Set factor levels of album_name
+  mutate(
+    album_name = factor(
+      album_name, levels = c("Spice", "Spiceworld", "Forever"))) %>%
+  arrange(album_name)
+
+```
 
 ## Useful packages
 
